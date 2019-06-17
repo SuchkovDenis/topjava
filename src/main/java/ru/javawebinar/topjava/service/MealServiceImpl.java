@@ -42,7 +42,9 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public void update(int userId, Meal meal) throws NotFoundException{
-        if (meal.getUserId() != null && userId == meal.getUserId()) {
+        Meal repoMeal = repository.get(userId, meal.getId());
+        if (repoMeal != null){
+            meal.setUserId(userId);
             repository.save(meal);
         } else {
             throw new NotFoundException("There is no such meal or you are trying to get meal, that is not yours!");
