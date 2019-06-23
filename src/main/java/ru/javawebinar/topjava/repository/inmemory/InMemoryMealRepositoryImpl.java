@@ -8,7 +8,6 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -35,8 +34,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(int userId, int id) {
-        return ((repository.get(id) != null) && (repository.get(id).getUserId() == userId)) && repository.remove(id) != null;
-
+        Meal meal = repository.get(id);
+        return ((meal != null) && (meal.getUserId() == userId)) && repository.remove(id) != null;
     }
 
     @Override
@@ -47,14 +46,13 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        List<Meal> collect = repository
+
+        return repository
                 .values()
                 .stream()
                 .filter(meal -> meal.getUserId() != null && meal.getUserId() == userId)
                 .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
-
-        return collect;
     }
 }
 
