@@ -24,15 +24,7 @@ public class Meal extends AbstractBaseEntity{
         this.description = description;
         this.calories = calories;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    
     public LocalDateTime getDateTime() {
         return dateTime;
     }
